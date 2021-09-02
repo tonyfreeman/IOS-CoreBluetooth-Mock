@@ -762,16 +762,15 @@ open class CBMPeripheralMock: CBMPeer, CBMPeripheral {
     open override var identifier: UUID {
         return mock.identifier
     }
+
+    /// Use this property to retrieve a human-readable name of the peripheral.
+    /// A peripheral may have two different name types: one that the device advertises and another that
+    /// the device publishes in its database as its Bluetooth low energy Generic Access Profile (GAP)
+    /// device name. If a peripheral has both types of names, this property returns its GAP device name.
     open var name: String? {
-        // If the device wasn't connected and has just been scanned first time,
-        // return nil. When scanning continued, the Local Name from the
-        // advertisement data is returned. When the device was connected, the
-        // central reads the Device Name characteristic and returns cached value.
-        return wasConnected ?
-            mock.name :
-            wasScanned ?
-                mock.advertisementData?[CBMAdvertisementDataLocalNameKey] as? String :
-                nil
+        return wasConnected
+            ? mock.name
+            : mock.advertisementData?[CBMAdvertisementDataLocalNameKey] as? String
     }
     @available(iOS 11.0, tvOS 11.0, watchOS 4.0, *)
     open var canSendWriteWithoutResponse: Bool {
