@@ -126,8 +126,8 @@ open class CBMServiceMock: CBMService {
     ///   - includedServices: Optional list of included services.
     ///   - characteristics: Optional list of characteristics.
     public init(type uuid: CBMUUID, primary isPrimary: Bool,
-                includedService: CBMServiceMock...,
-                characteristics: CBMCharacteristicMock...) {
+                includedService: [CBMServiceMock] = [],
+                characteristics: [CBMCharacteristicMock] = []) {
         super.init(type: uuid, primary: isPrimary)
         self._includedServices = includedService
         self._characteristics = characteristics
